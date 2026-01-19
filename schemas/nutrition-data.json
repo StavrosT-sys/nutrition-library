@@ -1,0 +1,351 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Complete Nutrition Data Schema",
+  "description": "Comprehensive nutrition profile including macros, micros, and metadata",
+  "type": "object",
+  "required": ["id", "name", "calories", "macros"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the food item"
+    },
+    "name": {
+      "type": "string",
+      "description": "Food item name"
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed description of the food item"
+    },
+    "brand": {
+      "type": "string",
+      "description": "Brand name if applicable"
+    },
+    "barcode": {
+      "type": "string",
+      "description": "UPC/EAN barcode"
+    },
+    "serving_size": {
+      "type": "object",
+      "description": "Standard serving size",
+      "properties": {
+        "quantity": {
+          "type": "number",
+          "description": "Quantity value"
+        },
+        "unit": {
+          "type": "string",
+          "enum": ["g", "oz", "ml", "cup", "tbsp", "tsp", "piece", "serving"],
+          "description": "Unit of measurement"
+        }
+      },
+      "required": ["quantity", "unit"]
+    },
+    "calories": {
+      "type": "number",
+      "description": "Total calories per serving",
+      "minimum": 0
+    },
+    "macros": {
+      "type": "object",
+      "description": "Macronutrient breakdown",
+      "properties": {
+        "protein_g": {
+          "type": "number",
+          "description": "Protein in grams",
+          "minimum": 0
+        },
+        "carbs_g": {
+          "type": "number",
+          "description": "Carbohydrates in grams",
+          "minimum": 0
+        },
+        "fat_g": {
+          "type": "number",
+          "description": "Total fat in grams",
+          "minimum": 0
+        },
+        "fiber_g": {
+          "type": "number",
+          "description": "Dietary fiber in grams",
+          "minimum": 0
+        },
+        "sugar_g": {
+          "type": "number",
+          "description": "Sugar in grams",
+          "minimum": 0
+        }
+      },
+      "required": ["protein_g", "carbs_g", "fat_g"]
+    },
+    "micros": {
+      "type": "object",
+      "description": "Micronutrient breakdown",
+      "properties": {
+        "sodium_mg": {
+          "type": "number",
+          "description": "Sodium in milligrams",
+          "minimum": 0
+        },
+        "potassium_mg": {
+          "type": "number",
+          "description": "Potassium in milligrams",
+          "minimum": 0
+        },
+        "calcium_mg": {
+          "type": "number",
+          "description": "Calcium in milligrams",
+          "minimum": 0
+        },
+        "iron_mg": {
+          "type": "number",
+          "description": "Iron in milligrams",
+          "minimum": 0
+        },
+        "magnesium_mg": {
+          "type": "number",
+          "description": "Magnesium in milligrams",
+          "minimum": 0
+        },
+        "phosphorus_mg": {
+          "type": "number",
+          "description": "Phosphorus in milligrams",
+          "minimum": 0
+        },
+        "zinc_mg": {
+          "type": "number",
+          "description": "Zinc in milligrams",
+          "minimum": 0
+        },
+        "vitamin_a_ug": {
+          "type": "number",
+          "description": "Vitamin A in micrograms",
+          "minimum": 0
+        },
+        "vitamin_c_mg": {
+          "type": "number",
+          "description": "Vitamin C in milligrams",
+          "minimum": 0
+        },
+        "vitamin_d_ug": {
+          "type": "number",
+          "description": "Vitamin D in micrograms",
+          "minimum": 0
+        },
+        "vitamin_e_mg": {
+          "type": "number",
+          "description": "Vitamin E in milligrams",
+          "minimum": 0
+        },
+        "vitamin_k_ug": {
+          "type": "number",
+          "description": "Vitamin K in micrograms",
+          "minimum": 0
+        },
+        "vitamin_b12_ug": {
+          "type": "number",
+          "description": "Vitamin B12 in micrograms",
+          "minimum": 0
+        },
+        "folate_ug": {
+          "type": "number",
+          "description": "Folate in micrograms",
+          "minimum": 0
+        },
+        "cholesterol_mg": {
+          "type": "number",
+          "description": "Cholesterol in milligrams",
+          "minimum": 0
+        }
+      }
+    },
+    "fat_breakdown": {
+      "type": "object",
+      "description": "Detailed fat composition",
+      "properties": {
+        "saturated_g": {
+          "type": "number",
+          "description": "Saturated fat in grams",
+          "minimum": 0
+        },
+        "monounsaturated_g": {
+          "type": "number",
+          "description": "Monounsaturated fat in grams",
+          "minimum": 0
+        },
+        "polyunsaturated_g": {
+          "type": "number",
+          "description": "Polyunsaturated fat in grams",
+          "minimum": 0
+        },
+        "trans_g": {
+          "type": "number",
+          "description": "Trans fat in grams",
+          "minimum": 0
+        }
+      }
+    },
+    "ingredients": {
+      "type": "array",
+      "description": "List of ingredients",
+      "items": {
+        "type": "string"
+      }
+    },
+    "allergens": {
+      "type": "array",
+      "description": "List of common allergens",
+      "items": {
+        "type": "string",
+        "enum": ["peanuts", "tree_nuts", "milk", "eggs", "fish", "shellfish", "soy", "wheat", "sesame"]
+      }
+    },
+    "source": {
+      "type": "object",
+      "description": "Data source information",
+      "properties": {
+        "api": {
+          "type": "string",
+          "enum": ["USDA", "OpenFoodFacts", "Edamam", "FatSecret", "Nutritionix", "user_input"],
+          "description": "Source API or input method"
+        },
+        "id": {
+          "type": "string",
+          "description": "Source-specific ID"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Source URL if available"
+        }
+      },
+      "required": ["api"]
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional metadata",
+      "properties": {
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When this record was created"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When this record was last updated"
+        },
+        "verified": {
+          "type": "boolean",
+          "description": "Whether data has been verified"
+        },
+        "confidence_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Confidence score for data accuracy"
+        },
+        "notes": {
+          "type": "string",
+          "description": "Additional notes or caveats"
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "id": "usda_170591",
+      "name": "Chicken, breast, skinless, boneless, raw",
+      "brand": null,
+      "barcode": null,
+      "serving_size": {
+        "quantity": 100,
+        "unit": "g"
+      },
+      "calories": 165,
+      "macros": {
+        "protein_g": 31,
+        "carbs_g": 0,
+        "fat_g": 3.6,
+        "fiber_g": 0,
+        "sugar_g": 0
+      },
+      "micros": {
+        "sodium_mg": 74,
+        "potassium_mg": 220,
+        "calcium_mg": 11,
+        "iron_mg": 0.3,
+        "magnesium_mg": 29,
+        "phosphorus_mg": 220,
+        "zinc_mg": 0.3,
+        "vitamin_a_ug": 6,
+        "vitamin_c_mg": 0,
+        "vitamin_d_ug": 0.1,
+        "cholesterol_mg": 85
+      },
+      "fat_breakdown": {
+        "saturated_g": 1.0,
+        "monounsaturated_g": 1.3,
+        "polyunsaturated_g": 0.7,
+        "trans_g": 0
+      },
+      "ingredients": ["chicken breast"],
+      "allergens": [],
+      "source": {
+        "api": "USDA",
+        "id": "170591",
+        "url": "https://fdc.nal.usda.gov/fdc-app.html#/?query=chicken%20breast"
+      },
+      "metadata": {
+        "created_at": "2024-01-15T10:30:00Z",
+        "updated_at": "2024-01-15T10:30:00Z",
+        "verified": true,
+        "confidence_score": 0.95,
+        "notes": "USDA FoodData Central - highly accurate"
+      }
+    },
+    {
+      "id": "off_5000112126619",
+      "name": "Coca-Cola",
+      "brand": "Coca-Cola",
+      "barcode": "5000112126619",
+      "serving_size": {
+        "quantity": 250,
+        "unit": "ml"
+      },
+      "calories": 105,
+      "macros": {
+        "protein_g": 0,
+        "carbs_g": 26,
+        "fat_g": 0,
+        "fiber_g": 0,
+        "sugar_g": 26
+      },
+      "micros": {
+        "sodium_mg": 45,
+        "potassium_mg": 0,
+        "calcium_mg": 0,
+        "iron_mg": 0
+      },
+      "fat_breakdown": {
+        "saturated_g": 0,
+        "monounsaturated_g": 0,
+        "polyunsaturated_g": 0,
+        "trans_g": 0
+      },
+      "ingredients": ["carbonated water", "high fructose corn syrup", "caramel color", "phosphoric acid", "caffeine"],
+      "allergens": [],
+      "source": {
+        "api": "OpenFoodFacts",
+        "id": "5000112126619"
+      },
+      "metadata": {
+        "created_at": "2024-01-15T10:30:00Z",
+        "updated_at": "2024-01-15T10:30:00Z",
+        "verified": false,
+        "confidence_score": 0.85,
+        "notes": "Crowdsourced data - may vary by region"
+      }
+    }
+  ]
+}

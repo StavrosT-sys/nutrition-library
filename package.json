@@ -1,0 +1,35 @@
+{
+  "name": "nutrition-library",
+  "version": "1.0.0",
+  "description": "Comprehensive guide and reference implementation for integrating food nutrition databases into fitness apps",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --test tests/**/*.test.js",
+    "lint": "eslint examples/ tests/",
+    "docs": "echo 'Documentation available in docs/ directory'"
+  },
+  "keywords": [
+    "nutrition",
+    "fitness",
+    "calories",
+    "macros",
+    "food-database",
+    "api-integration"
+  ],
+  "author": "Nutrition Library Team",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/nutrition-library.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/nutrition-library/issues"
+  },
+  "homepage": "https://github.com/yourusername/nutrition-library#readme"
+}
