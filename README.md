@@ -2,6 +2,13 @@
 
 A comprehensive guide and reference implementation for integrating food nutrition databases and APIs into fitness tracking applications. This project provides developers with curated options, integration patterns, and best practices for building calorie tracking features.
 
+## 🌐 Quick Links
+
+- **[Schema Viewer (Non-Developers)](./schema-viewer.html)** - User-friendly view of the nutrition data format
+- **[API Comparison Guide](./docs/api-comparison.md)** - Detailed analysis of free and paid nutrition databases
+- **[Integration Examples](./docs/integration-guide.md)** - Code samples for popular APIs
+- **[GitHub Repository](https://github.com/StavrosT-sys/nutrition-library)** - Full source code
+
 ## Overview
 
 This repository serves as a central hub for nutrition data integration, offering:
@@ -11,6 +18,7 @@ This repository serves as a central hub for nutrition data integration, offering
 - **Data Schemas:** Standardized JSON schemas for nutrition data
 - **Best Practices:** Implementation patterns for offline caching, barcode scanning, and more
 - **Calculation Formulas:** BMR, MET-based calorie burn, and macro tracking
+- **Schema Viewer:** User-friendly web page explaining the data format for non-developers
 
 ## Quick Start
 
@@ -19,6 +27,11 @@ This repository serves as a central hub for nutrition data integration, offering
 1. **Choose Your API:** Review the [API Comparison Guide](./docs/api-comparison.md) to select the best fit for your use case
 2. **Integrate:** Use examples from the [Integration Guide](./docs/integration-guide.md)
 3. **Reference Data:** Access standardized schemas in the [Data Schemas](./schemas/) directory
+
+### For Non-Developers
+
+- **[View Schema Viewer](./schema-viewer.html)** - Easy-to-understand explanation of our nutrition data format
+- No technical knowledge required!
 
 ### For Team Members
 
@@ -31,12 +44,14 @@ This repository serves as a central hub for nutrition data integration, offering
 ```
 nutrition-library/
 ├── README.md                      # This file
+├── schema-viewer.html             # User-friendly schema viewer (no coding required!)
 ├── docs/
 │   ├── api-comparison.md          # Detailed API feature comparison
 │   ├── integration-guide.md        # Step-by-step integration examples
 │   ├── setup.md                   # Environment setup and configuration
 │   ├── calculations.md            # Calorie burn and BMR formulas
-│   └── best-practices.md          # Implementation patterns and tips
+│   ├── best-practices.md          # Implementation patterns and tips
+│   └── original-guide.md          # Original formatted content
 ├── schemas/
 │   ├── nutrition-data.json        # Standard nutrition data schema
 │   ├── food-item.json             # Food item structure
@@ -89,7 +104,7 @@ nutrition-library/
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/nutrition-library.git
+git clone https://github.com/StavrosT-sys/nutrition-library.git
 cd nutrition-library
 
 # Install dependencies (Node.js)
@@ -165,6 +180,7 @@ See the [examples/](./examples/) directory for more detailed implementations.
 - **[Calculation Formulas](./docs/calculations.md)** - BMR, MET, and macro calculations
 - **[Best Practices](./docs/best-practices.md)** - Performance, caching, and UX tips
 - **[Data Schemas](./schemas/)** - JSON schema definitions
+- **[Schema Viewer](./schema-viewer.html)** - User-friendly schema explanation
 
 ## Contributing
 
@@ -183,14 +199,16 @@ All nutrition data follows standardized JSON schemas for consistency:
 - **[food-item.json](./schemas/food-item.json)** - Individual food item structure
 - **[user-metrics.json](./schemas/user-metrics.json)** - User profile and daily metrics
 
+**For a user-friendly explanation, see the [Schema Viewer](./schema-viewer.html)**
+
 ## License
 
 This project is licensed under the MIT License - see [LICENSE](./LICENSE) file for details.
 
 ## Support
 
-- **Issues:** Report bugs or request features via [GitHub Issues](https://github.com/yourusername/nutrition-library/issues)
-- **Discussions:** Join community discussions in [GitHub Discussions](https://github.com/yourusername/nutrition-library/discussions)
+- **Issues:** Report bugs or request features via [GitHub Issues](https://github.com/StavrosT-sys/nutrition-library/issues)
+- **Discussions:** Join community discussions in [GitHub Discussions](https://github.com/StavrosT-sys/nutrition-library/discussions)
 - **Documentation:** Check the [docs/](./docs/) directory for detailed guides
 
 ## Acknowledgments
