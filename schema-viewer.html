@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutrition Data Schema - Easy Reference</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .intro {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+        }
+
+        .intro h2 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            color: #667eea;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .field-group {
+            margin-bottom: 30px;
+        }
+
+        .field-group-title {
+            font-size: 1.4em;
+            color: #764ba2;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .field {
+            background: #f8f9fa;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .field:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .field-name {
+            font-weight: 600;
+            color: #667eea;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .field-type {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            margin-left: 10px;
+        }
+
+        .field-required {
+            display: inline-block;
+            background: #dc3545;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            margin-left: 5px;
+        }
+
+        .field-description {
+            color: #666;
+            margin-top: 8px;
+            line-height: 1.5;
+        }
+
+        .example-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+
+        .example-title {
+            font-size: 1.3em;
+            color: #764ba2;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .example-box {
+            background: white;
+            padding: 20px;
+            border-radius: 6px;
+            border: 2px solid #dee2e6;
+            margin-bottom: 20px;
+        }
+
+        .example-item {
+            margin-bottom: 10px;
+        }
+
+        .example-label {
+            font-weight: 600;
+            color: #667eea;
+            display: inline-block;
+            min-width: 150px;
+        }
+
+        .example-value {
+            color: #333;
+        }
+
+        .nested-field {
+            margin-left: 20px;
+            padding-left: 15px;
+            border-left: 2px solid #dee2e6;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-right: 5px;
+        }
+
+        .badge-optional {
+            background: #6c757d;
+            color: white;
+        }
+
+        .badge-enum {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .enum-values {
+            margin-top: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .enum-values code {
+            background: #e9ecef;
+            padding: 2px 6px;
+            border-radius: 3px;
+            margin-right: 5px;
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #dee2e6;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .section-title {
+                font-size: 1.4em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Nutrition Data Schema</h1>
+            <p>Easy Reference Guide for Non-Developers</p>
+        </div>
+
+        <div class="content">
+            <div class="intro">
+                <h2>What is this?</h2>
+                <p>This document explains the standard format for storing nutrition information in our fitness app. Each food item in our database follows this structure to ensure consistency and completeness.</p>
+            </div>
+
+            <!-- Basic Information Section -->
+            <div class="section">
+                <h2 class="section-title">📝 Basic Information</h2>
+                <p style="margin-bottom: 20px;">Essential details that identify the food item.</p>
+
+                <div class="field">
+                    <div class="field-name">
+                        ID
+                        <span class="field-type">text</span>
+                        <span class="field-required">REQUIRED</span>
+                    </div>
+                    <div class="field-description">
+                        A unique identifier for each food item. This helps us track and reference foods in our database.
+                        <br><strong>Example:</strong> "usda_170591" or "off_5000112126619"
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="field-name">
+                        Name
+                        <span class="field-type">text</span>
+                        <span class="field-required">REQUIRED</span>
+                    </div>
+                    <div class="field-description">
+                        The common name of the food item.
+                        <br><strong>Example:</strong> "Chicken breast, skinless, boneless" or "Coca-Cola"
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="field-name">
+                        Description
+                        <span class="field-type">text</span>
+                        <span class="badge badge-optional">OPTIONAL</span>
+                    </div>
+                    <div class="field-description">
+                        A more detailed description of the food item, including preparation method or specific variety.
+                        <br><strong>Example:</strong> "Raw, uncooked chicken breast without skin or bones"
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="field-name">
+                        Brand
+                        <span class="field-type">text</span>
+                        <span class="badge badge-optional">OPTIONAL</span>
+                    </div>
+                    <div class="field-description">
+                        The brand name for packaged or commercial products.
+                        <br><strong>Example:</strong> "Coca-Cola", "Kellogg's", "Dannon"
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="field-name">
+                        Barcode
+                        <span class="field-type">text</span>
+                        <span class="badge badge-optional">OPTIONAL</span>
+                    </div>
+                    <div class="field-description">
+                        The UPC or EAN barcode number for packaged products. Used for quick scanning.
+                        <br><strong>Example:</strong> "5000112126619"
+                    </div>
+                </div>
+            </div>
+
+            <!-- Serving Size Section -->
+            <div class="section">
+                <h2 class="section-title">🥄 Serving Size</h2>
+                <p style="margin-bottom: 20px;">Defines the standard portion size for the nutrition information.</p>
+
+                <div class="field">
+                    <div class="field-name">
+                        Quantity
+                        <span class="field-type">number</span>
+                        <span class="field-required">REQUIRED</span>
+                    </div>
+                    <div class="field-description">
+                        The numeric amount for the serving size.
+                        <br><strong>Example:</strong> 100, 250, 1
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="field-name">
+                        Unit
+                        <span class="field-type">text</span>
+                        <span class="field-required">REQUIRED</span>
+                        <span class="badge badge-enum">LIMITED OPTIONS</span>
+                    </div>
+                    <div class="field-description">
+                        The unit of measurement for the serving size.
+                        <div class="enum-values">
+                            <strong>Allowed values:</strong><br>
+                            <code>g</code> (grams)
+                            <code>oz</code> (ounces)
+                            <code>ml</code> (milliliters)
+                            <code>cup</code>
+                            <code>tbsp</code> (tablespoon)
+                            <code>tsp</code> (teaspoon)
+                            <code>piece</code>
+                            <code>serving</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calories Section -->
+            <div class="section">
+                <h2 class="section-title">🔥 Calories</h2>
+                
+                <div class="field">
+                    <div class="field-name">
+                        Calories
+                        <span class="field-type">number</span>
+                        <span class="field-required">REQUIRED</span>
+                    </div>
+                    <div class="field-description">
+                        Total energy content per serving, measured in kilocalories (kcal).
+                        <br><strong>Example:</strong> 165 (for 100g chicken breast) or 105 (for 250ml Coca-Cola)
+                    </div>
+                </div>
+            </div>
+
+            <!-- Macronutrients Section -->
+            <div class="section">
+                <h2 class="section-title">🥗 Macronutrients (Macros)</h2>
+                <p style="margin-bottom: 20px;">The main nutrients that provide energy: protein, carbohydrates, and fats.</p>
+
+                <div class="field">
+                    <div class="field-name">
+                        Protein
+                        <span class="field-type">number</span>
+                        <span class="field-required">REQUIRED</span>
+                    </div>
+                    <div class="field-description">
+                        Amount of protein in grams per serving. Essential for muscle building and repair.
+                        <br><strong>Example:</strong> 31g (chicken breast), 0g (soda)
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="field-name">
+                        Carbohydrates
+                        <span class="field-type">number</span>
+                        <span class="field-required">REQUIRED</span>
+                    </div>
+                    <div class="field-description">
+                        Amount of carbohydrates in grams per serving. Primary energy source for the body.
+                        <br><strong>Example:</strong> 0g (chicken breast), 26g (soda)
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="field-name">
+                        Fat
+                        <span class="field-type">number</span>
+                        <span class="field-required">REQUIRED</span>
+                    </div>
+                    <div class="field-description">
+                        Total amount of fat in grams per serving. Important for hormone production and nutrient absorption.
+                        <br><strong>Example:</strong> 3.6g (chicken breast), 0g (soda)
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="field-name">
+                        Fiber
+                        <span class="field-type">number</span>
+                        <span class="badge badge-optional">OPTIONAL</span>
+                    </div>
+                    <div class="field-description">
+                        Amount of dietary fiber in grams per serving. Aids digestion and promotes gut health.
+                        <br><strong>Example:</strong> 0g (chicken breast), 5g (whole wheat bread)
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="field-name">
+                        Sugar
+                        <span class="field-type">number</span>
+                        <span class="badge badge-optional">OPTIONAL</span>
+                    </div>
+                    <div class="field-description">
+                        Amount of sugar in grams per serving (included in total carbohydrates).
+                        <br><strong>Example:</strong> 0g (chicken breast), 26g (soda)
+                    </div>
+                </div>
+            </div>
+
+            <!-- Micronutrients Section -->
+            <div class="section">
+                <h2 class="section-title">💊 Micronutrients (Vitamins & Minerals)</h2>
+                <p style="margin-bottom: 20px;">Essential vitamins and minerals needed in smaller amounts for various body functions. All fields are optional.</p>
+
+                <div class="field-group">
+                    <div class="field-group-title">Minerals</div>
+                    
+                    <div class="field">
+                        <div class="field-name">Sodium <span class="field-type">number (mg)</span></div>
+                        <div class="field-description">Important for fluid balance and nerve function. High amounts may affect blood pressure.</div>
+                    </div>
+
+                    <div class="field">
+                        <div class="field-name">Potassium <span class="field-type">number (mg)</span></div>
+                        <div class="field-description">Essential for heart function and muscle contractions.</div>
+                    </div>
+
+                    <div class="field">
+                        <div class="field-name">Calcium <span class="field-type">number (mg)</span></div>
+                        <div class="field-description">Critical for bone health and muscle function.</div>
+                    </div>
+
+                    <div class="field">
+                        <div class="field-name">Iron <span class="field-type">number (mg)</span></div>
+                        <div class="field-description">Necessary for oxygen transport in blood.</div>
+                    </div>
+
+                    <div class="field">
+                        <div class="field-name">Magnesium <span class="field-type">number (mg)</span></div>
+                        <div class="field-description">Supports muscle and nerve function, blood sugar control.</div>
+                    </div>
+
+                    <div class="field">
+                        <div class="field-name">Zinc <span class="field-type">number (mg)</span></div>
+                        <div class="field-description">Important for immune function and wound healing.</div>
+                    </div>
+
+                    <div class="field">
+                        <div class="field-name">Cholesterol <span class="field-type">number (mg)</span></div>
+                        <div class="field-description">A type of fat found in animal products. High levels may affect heart health.</div>
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <div class="field-group-title">Vitamins</div>
+                    
+                    <div class="field">
+                        <div class="field-name">Vitamin A <span class="field-type">number (μg)</span></div>
+                        <div class="field-description">Essential for vision, immune function, and skin health.</div>
+                    </div>
+
+                    <div class="field">
+                        <div class="field-name">Vitamin C <span class="field-type">number (mg)</span></div>
+                        <div class="field-description">Antioxidant that supports immune function and collagen production.</div>
+                    </div>
+
+                    <div class="field">
+                        <div class="field-name">Vitamin D <span class="field-type">number (μg)</span></div>
+                        <div class="field-description">Critical for bone health and calcium absorption.</div>
+                    </div>
+
+                    <div class="field">
+                        <div class="field-name">Vitamin E <span class="field-type">number (mg)</span></div>
+                        <div class="field-description">Antioxidant that protects cells from damage.</div>
+                    </div>
+
+                    <div class="field">
+                        <div class="field-name">Vitamin K <span class="field-type">number (μg)</span></div>
+                        <div class="field-description">Important for blood clotting and bone health.</div>
+                    </div>
+
+                    <div class="field">
+                        <div class="field-name">Vitamin B12 <span class="field-type">number (μg)</span></div>
+                        <div class="field-description">Essential for nerve function and red blood cell formation.</div>
+                    </div>
+
+                    <div class="field">
+                        <div class="field-name">Folate <span class="field-type">number (μg)</span></div>
+                        <div class="field-description">Important for cell division and DNA synthesis.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fat Breakdown Section -->
+            <div class="section">
+                <h2 class="section-title">🧈 Fat Breakdown</h2>
+                <p style="margin-bottom: 20px;">Detailed composition of the total fat content. All fields are optional.</p>
+
+                <div class="field">
+                    <div class="field-name">Saturated Fat <span class="field-type">number (g)</span></div>
+                    <div class="field-description">
+                        Fat that is solid at room temperature. Found in animal products and some plant oils. High intake may affect cholesterol levels.
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="field-name">Monounsaturated Fat <span class="field-type">number (g)</span></div>
+                    <div class="field-description">
+                        Healthy fat found in olive oil, avocados, and nuts. May help reduce bad cholesterol.
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="field-name">Polyunsaturated Fat <span class="field-type">number (g)</span></div>
+                    <div class="field-description">
+                        Healthy fat found in fish, walnuts, and flaxseeds. Includes omega-3 and omega-6 fatty acids.
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="field-name">Trans Fat <span class="field-type">number (g)</span></div>
+                    <div class="field-description">
+                        Artificial fat created through hydrogenation. Should be avoided as it increases heart disease risk.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Information Section -->
+            <div class="section">
+                <h2 class="section-title">ℹ️ Additional Information</h2>
+
+                <div class="field">
+                    <div class="field-name">Ingredients <span class="field-type">list of text</span></div>
+                    <div class="field-description">
+                        A list of all ingredients in the product, typically in order of quantity.
+                        <br><strong>Example:</strong> ["carbonated water", "high fructose corn syrup", "caramel color"]
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="field-name">Allergens <span class="field-type">list</span> <span class="badge badge-enum">LIMITED OPTIONS</span></div>
+                    <div class="field-description">
+                        Common allergens present in the food.
+                        <div class="enum-values">
+                            <strong>Possible values:</strong><br>
+                            <code>peanuts</code>
+                            <code>tree_nuts</code>
+                            <code>milk</code>
+                            <code>eggs</code>
+                            <code>fish</code>
+                            <code>shellfish</code>
+                            <code>soy</code>
+                            <code>wheat</code>
+                            <code>sesame</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Source Information Section -->
+            <div class="section">
+                <h2 class="section-title">📚 Source Information</h2>
+                <p style="margin-bottom: 20px;">Tracks where the nutrition data came from for verification and updates.</p>
+
+                <div class="field">
+                    <div class="field-name">API Source <span class="field-type">text</span> <span class="badge badge-enum">LIMITED OPTIONS</span></div>
+                    <div class="field-description">
+                        The database or API where this data originated.
+                        <div class="enum-values">
+                            <strong>Possible values:</strong><br>
+                            <code>USDA</code>
+                            <code>OpenFoodFacts</code>
+                            <code>Edamam</code>
+                            <code>FatSecret</code>
+                            <code>Nutritionix</code>
+                            <code>user_input</code>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="field-name">Source ID <span class="field-type">text</span></div>
+                    <div class="field-description">
+                        The unique identifier from the source database.
+                        <br><strong>Example:</strong> "170591" (USDA ID)
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="field-name">Source URL <span class="field-type">web address</span></div>
+                    <div class="field-description">
+                        Direct link to the source data for verification.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Metadata Section -->
+            <div class="section">
+                <h2 class="section-title">🏷️ Metadata</h2>
+                <p style="margin-bottom: 20px;">Technical information about the data record itself. All fields are optional.</p>
+
+                <div class="field">
+                    <div class="field-name">Created At <span class="field-type">date/time</span></div>
+                    <div class="field-description">
+                        When this record was first added to our database.
+                        <br><strong>Format:</strong> ISO 8601 (e.g., "2024-01-15T10:30:00Z")
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="field-name">Updated At <span class="field-type">date/time</span></div>
+                    <div class="field-description">
+                        When this record was last modified.
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="field-name">Verified <span class="field-type">true/false</span></div>
+                    <div class="field-description">
+                        Whether the data has been verified by a trusted source or administrator.
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="field-name">Confidence Score <span class="field-type">number (0-1)</span></div>
+                    <div class="field-description">
+                        A score indicating how confident we are in the accuracy of this data. 1.0 = very confident, 0.0 = uncertain.
+                        <br><strong>Example:</strong> 0.95 (USDA data), 0.85 (crowdsourced data)
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="field-name">Notes <span class="field-type">text</span></div>
+                    <div class="field-description">
+                        Any additional notes, caveats, or important information about this data.
+                        <br><strong>Example:</strong> "May vary by region" or "USDA FoodData Central - highly accurate"
+                    </div>
+                </div>
+            </div>
+
+            <!-- Examples Section -->
+            <div class="example-section">
+                <h2 class="example-title">📋 Real Examples</h2>
+
+                <div class="example-box">
+                    <h3 style="color: #667eea; margin-bottom: 15px;">Example 1: Chicken Breast (Raw)</h3>
+                    <div class="example-item">
+                        <span class="example-label">ID:</span>
+                        <span class="example-value">usda_170591</span>
+                    </div>
+                    <div class="example-item">
+                        <span class="example-label">Name:</span>
+                        <span class="example-value">Chicken, breast, skinless, boneless, raw</span>
+                    </div>
+                    <div class="example-item">
+                        <span class="example-label">Serving Size:</span>
+                        <span class="example-value">100g</span>
+                    </div>
+                    <div class="example-item">
+                        <span class="example-label">Calories:</span>
+                        <span class="example-value">165 kcal</span>
+                    </div>
+                    <div class="example-item">
+                        <span class="example-label">Protein:</span>
+                        <span class="example-value">31g</span>
+                    </div>
+                    <div class="example-item">
+                        <span class="example-label">Carbs:</span>
+                        <span class="example-value">0g</span>
+                    </div>
+                    <div class="example-item">
+                        <span class="example-label">Fat:</span>
+                        <span class="example-value">3.6g</span>
+                    </div>
+                    <div class="example-item">
+                        <span class="example-label">Source:</span>
+                        <span class="example-value">USDA FoodData Central</span>
+                    </div>
+                    <div class="example-item">
+                        <span class="example-label">Verified:</span>
+                        <span class="example-value">✅ Yes (Confidence: 95%)</span>
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h3 style="color: #667eea; margin-bottom: 15px;">Example 2: Coca-Cola (Packaged Product)</h3>
+                    <div class="example-item">
+                        <span class="example-label">ID:</span>
+                        <span class="example-value">off_5000112126619</span>
+                    </div>
+                    <div class="example-item">
+                        <span class="example-label">Name:</span>
+                        <span class="example-value">Coca-Cola</span>
+                    </div>
+                    <div class="example-item">
+                        <span class="example-label">Brand:</span>
+                        <span class="example-value">Coca-Cola</span>
+                    </div>
+                    <div class="example-item">
+                        <span class="example-label">Barcode:</span>
+                        <span class="example-value">5000112126619</span>
+                    </div>
+                    <div class="example-item">
+                        <span class="example-label">Serving Size:</span>
+                        <span class="example-value">250ml</span>
+                    </div>
+                    <div class="example-item">
+                        <span class="example-label">Calories:</span>
+                        <span class="example-value">105 kcal</span>
+                    </div>
+                    <div class="example-item">
+                        <span class="example-label">Protein:</span>
+                        <span class="example-value">0g</span>
+                    </div>
+                    <div class="example-item">
+                        <span class="example-label">Carbs:</span>
+                        <span class="example-value">26g</span>
+                    </div>
+                    <div class="example-item">
+                        <span class="example-label">Sugar:</span>
+                        <span class="example-value">26g</span>
+                    </div>
+                    <div class="example-item">
+                        <span class="example-label">Fat:</span>
+                        <span class="example-value">0g</span>
+                    </div>
+                    <div class="example-item">
+                        <span class="example-label">Source:</span>
+                        <span class="example-value">Open Food Facts</span>
+                    </div>
+                    <div class="example-item">
+                        <span class="example-label">Verified:</span>
+                        <span class="example-value">⚠️ Crowdsourced (Confidence: 85%)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>Nutrition Library Project</strong> | Last Updated: January 2026</p>
+            <p>For technical documentation, visit the <a href="https://github.com/StavrosT-sys/nutrition-library" style="color: #667eea;">GitHub Repository</a></p>
+        </div>
+    </div>
+</body>
+</html>
