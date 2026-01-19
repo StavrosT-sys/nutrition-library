@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutrition API Integration Example</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f7f9;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            width: calc(100% - 100px);
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            padding: 12px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        #results-section {
+            margin-top: 30px;
+        }
+        #food-results-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        #food-results-list li {
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            border-left: 4px solid #3498db;
+        }
+        .loader {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Live Nutrition Database Search</h1>
+        <p>This is a working example of how to connect your app to a free, external nutrition library (the USDA FoodData Central API). Type a food in the box below and see the results!</p>
+
+        <!-- Step 1: The Search Bar -->
+        <div id="food-search-section">
+            <h2>Search for a Food</h2>
+            <input type="text" id="food-search-input" placeholder="e.g., banana, grilled cheese...">
+            <button id="search-btn">Search</button>
+        </div>
+
+        <!-- This is where we will display the results from the API -->
+        <div id="results-section">
+            <h3>Results</h3>
+            <div class="loader" id="loader">Searching for data...</div>
+            <ul id="food-results-list"></ul>
+        </div>
+    </div>
+
+    <script>
+        // This is all the JavaScript needed to make the page work.
+
+        // First, we get references to the HTML elements we need to interact with.
+        const searchButton = document.getElementById("search-btn");
+        const searchInput = document.getElementById("food-search-input");
+        const resultsList = document.getElementById("food-results-list");
+        const loader = document.getElementById("loader");
+
+        // We add a "click" event listener to our search button.
+        // This will run our main search logic whenever the button is clicked.
+        searchButton.addEventListener("click", async () => {
+            const query = searchInput.value;
+
+            // Don't search if the input is empty
+            if (!query) {
+                alert("Please enter a food to search for.");
+                return;
+            }
+
+            // Show the loading message and clear old results
+            loader.style.display = "block";
+            resultsList.innerHTML = "";
+
+            // Call our function to talk to the API
+            const foods = await searchFood(query);
+
+            // Hide the loading message
+            loader.style.display = "none";
+
+            // Call our function to display the results
+            displayResults(foods);
+        });
+
+        // Add an event listener for the "Enter" key on the input field
+        searchInput.addEventListener("keyup", (event) => {
+            if (event.key === "Enter") {
+                searchButton.click(); // Simulate a click on the search button
+            }
+        });
+
+        // --- Step 2: The JavaScript to Talk to the API ---
+        async function searchFood(foodName) {
+            // The base URL for the USDA API search endpoint
+            const apiEndpoint = 'https://api.nal.usda.gov/fdc/v1/foods/search';
+            
+            // For this demo, we use the free DEMO_KEY provided by the USDA.
+            // For a real app, you would get your own free key from their website.
+            const apiKey = 'DEMO_KEY'; 
+
+            // We build the full URL with the foodName and our API key.
+            // `encodeURIComponent` makes sure the food name is safe for a URL (e.g., spaces become %20).
+            const url = `${apiEndpoint}?query=${encodeURIComponent(foodName)}&api_key=${apiKey}`;
+
+            try {
+                // We use `fetch` to make the API call and wait for the response.
+                const response = await fetch(url);
+                
+                // We convert the response into a format JavaScript can easily use (JSON).
+                const data = await response.json();
+                
+                // The actual food items are inside a property called 'foods'.
+                return data.foods;
+
+            } catch (error) {
+                // If something goes wrong (like no internet), we log an error to the console.
+                console.error("Error fetching food data:", error);
+                alert("Could not fetch data. Please check your internet connection and try again.");
+                return []; // Return an empty list on error.
+            }
+        }
+
+        // --- Step 3: The JavaScript to Display the Results ---
+        function displayResults(foods) {
+            // First, we clear any old results from the list.
+            resultsList.innerHTML = '';
+
+            // If the API returned no foods, we show a helpful message.
+            if (!foods || foods.length === 0) {
+                resultsList.innerHTML = '<li>No results found. Try another search term.</li>';
+                return;
+            }
+
+            // We loop through each food item in the list that the API sent back.
+            foods.forEach(food => {
+                // For each food, we need to find the calorie information.
+                // The nutrient data is in a list called 'foodNutrients'.
+                // We use the .find() method to look for the nutrient with the name 'Energy'.
+                const calorieNutrient = food.foodNutrients.find(n => n.nutrientName === 'Energy');
+                const calories = calorieNutrient ? calorieNutrient.value : 'N/A';
+
+                // We also get protein, carbs, and fat for a more complete result.
+                const proteinNutrient = food.foodNutrients.find(n => n.nutrientName === 'Protein');
+                const protein = proteinNutrient ? proteinNutrient.value : 'N/A';
+
+                const carbNutrient = food.foodNutrients.find(n => n.nutrientName === 'Carbohydrate, by difference');
+                const carbs = carbNutrient ? carbNutrient.value : 'N/A';
+
+                const fatNutrient = food.foodNutrients.find(n => n.nutrientName === 'Total lipid (fat)');
+                const fat = fatNutrient ? fatNutrient.value : 'N/A';
+
+                // We create a new list item (<li>) to display the food's info.
+                const listItem = document.createElement('li');
+                
+                // We use innerHTML to structure the content inside the list item.
+                listItem.innerHTML = `
+                    <strong>${food.description}</strong><br>
+                    <em>Calories: ${calories} kcal</em> | 
+                    <em>Protein: ${protein}g</em> | 
+                    <em>Carbs: ${carbs}g</em> | 
+                    <em>Fat: ${fat}g</em>
+                `;
+                
+                // Finally, we add the new list item to our results list on the page.
+                resultsList.appendChild(listItem);
+            });
+        }
+
+    </script>
+
+</body>
+</html>
